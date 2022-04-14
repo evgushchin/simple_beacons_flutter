@@ -258,7 +258,7 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                                         Manifest.permission.ACCESS_FINE_LOCATION,
                                         Manifest.permission.ACCESS_COARSE_LOCATION,
                                         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                        Manifest.android.permission.BLUETOOTH_SCAN
+                                        Manifest.permission.BLUETOOTH_SCAN
                                     ),
                                     REQUEST_LOCATION_PERMISSIONS
                                 )
@@ -271,7 +271,7 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                                         Manifest.permission.ACCESS_FINE_LOCATION,
                                         Manifest.permission.ACCESS_COARSE_LOCATION,
                                         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                        Manifest.android.permission.BLUETOOTH
+                                        Manifest.permission.BLUETOOTH
                                     ),
                                     REQUEST_LOCATION_PERMISSIONS
                                 )
