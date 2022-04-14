@@ -250,16 +250,32 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
             if (!arePermissionsGranted()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        currentActivity?.let {
-                            ActivityCompat.requestPermissions(
-                                it,
-                                arrayOf(
-                                    Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                ),
-                                REQUEST_LOCATION_PERMISSIONS
-                            )
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            currentActivity?.let {
+                                ActivityCompat.requestPermissions(
+                                    it,
+                                    arrayOf(
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                                        Manifest.android.permission.BLUETOOTH_SCAN
+                                    ),
+                                    REQUEST_LOCATION_PERMISSIONS
+                                )
+                            }
+                        } else {
+                            currentActivity?.let {
+                                ActivityCompat.requestPermissions(
+                                    it,
+                                    arrayOf(
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                                        Manifest.android.permission.BLUETOOTH
+                                    ),
+                                    REQUEST_LOCATION_PERMISSIONS
+                                )
+                            }
                         }
                     } else {
                         currentActivity?.let {
