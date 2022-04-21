@@ -98,7 +98,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
 
     BeaconsPlugin.listenToBeacons(beaconEventsController);
-
+    await BeaconsPlugin.addRegion(
+        "BeaconType0", "fda50693-a4e2-4fb1-afcf-c6eb07647825");
     await BeaconsPlugin.addRegion(
         "BeaconType1", "909c3cf9-fc5c-4841-b695-380958a51a5a");
     await BeaconsPlugin.addRegion(
@@ -213,7 +214,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     var rng = new Random();
     Future.delayed(Duration(seconds: 5)).then((result) async {
       var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-          'your channel id', 'your channel name', 'your channel description',
+          'your channel id', 'your channel name',
           importance: Importance.high,
           priority: Priority.high,
           ticker: 'ticker');

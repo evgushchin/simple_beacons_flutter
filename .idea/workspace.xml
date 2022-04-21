@@ -37,17 +37,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7b9ec39-f1d6-4277-a85a-8c6c793e0ff7" name="Default Changelist" comment="Released v1.18&#10;&#10;- (Android) Removed ACCESS_BACKGROUND_LOCATION permission from plugin to prevent App Rejection&#10;- (iOS) Removed UIBackgroundModes key from info.pList from Plugin to prevent App Rejection">
-      <change afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/BeaconPreferences.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/AppUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/AppUtils.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/BeaconHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/BeaconHelper.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/BeaconsPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/BeaconsPlugin.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/beacons_plugin/ios/Classes/SwiftBeaconsPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/beacons_plugin/ios/Classes/SwiftBeaconsPlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacons_plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/beacons_plugin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/beacons_plugin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/beacons_plugin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/beacons_plugin_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/beacons_plugin_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,13 +75,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="com.developerphil.adbidea.ui.ModuleChooserDialogHelper-SELECTED_MODULE" value="beacons_plugin_example_android" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -87,6 +94,7 @@
       <recent name="$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin" />
     </key>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -409,51 +417,15 @@
     <MESSAGE value="Released v1.18&#10;&#10;- (Android) Removed ACCESS_BACKGROUND_LOCATION permission from plugin to prevent App Rejection&#10;- (iOS) Removed UIBackgroundModes key from info.pList from Plugin to prevent App Rejection" />
     <option name="LAST_COMMIT_MESSAGE" value="Released v1.18&#10;&#10;- (Android) Removed ACCESS_BACKGROUND_LOCATION permission from plugin to prevent App Rejection&#10;- (iOS) Removed UIBackgroundModes key from info.pList from Plugin to prevent App Rejection" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="254" y="23" key="CommitChangelistDialog2" timestamp="1602335943107">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state x="254" y="23" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1602335943107" />
-    <state x="100" y="123" width="1240" height="597" key="DiffContextDialog" timestamp="1602335894948">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state x="100" y="123" width="1240" height="597" key="DiffContextDialog/0.23.1440.797@0.23.1440.797" timestamp="1602335894948" />
-    <state width="1398" height="151" key="GridCell.Tab.0.bottom" timestamp="1607711637076">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="362" key="GridCell.Tab.0.bottom/0.23.1440.797/1440.23.1600.877/-1050.-195.1050.1657@0.23.1440.797" timestamp="1603178765686" />
-    <state width="1398" height="151" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1607711637076" />
-    <state width="1398" height="151" key="GridCell.Tab.0.center" timestamp="1607711637075">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="362" key="GridCell.Tab.0.center/0.23.1440.797/1440.23.1600.877/-1050.-195.1050.1657@0.23.1440.797" timestamp="1603178765685" />
-    <state width="1398" height="151" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1607711637075" />
-    <state width="1398" height="151" key="GridCell.Tab.0.left" timestamp="1607711637075">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="362" key="GridCell.Tab.0.left/0.23.1440.797/1440.23.1600.877/-1050.-195.1050.1657@0.23.1440.797" timestamp="1603178765685" />
-    <state width="1398" height="151" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1607711637075" />
-    <state width="1398" height="151" key="GridCell.Tab.0.right" timestamp="1607711637076">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="362" key="GridCell.Tab.0.right/0.23.1440.797/1440.23.1600.877/-1050.-195.1050.1657@0.23.1440.797" timestamp="1603178765686" />
-    <state width="1398" height="151" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1607711637076" />
-    <state x="320" y="191" key="Vcs.Push.Dialog.v2" timestamp="1607190184708">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state x="320" y="191" key="Vcs.Push.Dialog.v2/0.23.1440.797@0.23.1440.797" timestamp="1607190184708" />
-    <state x="500" y="345" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607188309220">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state x="500" y="345" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.797@0.23.1440.797" timestamp="1607188309220" />
-    <state x="373" y="206" width="878" height="499" key="find.popup" timestamp="1607672123549">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="373" y="206" width="878" height="499" key="find.popup/0.0.1440.900/-1680.-267.1680.1050@0.0.1440.900" timestamp="1607672123549" />
-    <state x="1854" y="224" width="975" height="486" key="find.popup/0.23.1440.797/1440.23.1600.877/-1050.-195.1050.1657@1440.23.1600.877" timestamp="1601992759568" />
-    <state x="1905" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1601992800399">
-      <screen x="1440" y="23" width="1600" height="877" />
-    </state>
-    <state x="1905" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.797/1440.23.1600.877/-1050.-195.1050.1657@1440.23.1600.877" timestamp="1601992800399" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/android/src/main/kotlin/com/umair/beacons_plugin/BeaconHelper.kt</url>
+          <line>254</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

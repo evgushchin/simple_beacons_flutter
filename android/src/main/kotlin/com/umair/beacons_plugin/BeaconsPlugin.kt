@@ -247,53 +247,51 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
         }
 
         private fun requestLocationPermissions() {
-            if (!arePermissionsGranted()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (isGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        if (!isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
                             currentActivity?.let {
                                 ActivityCompat.requestPermissions(
-                                    it,
-                                    arrayOf(
-                                        Manifest.permission.ACCESS_FINE_LOCATION,
-                                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                        Manifest.permission.BLUETOOTH_SCAN
-                                    ),
-                                    REQUEST_LOCATION_PERMISSIONS
+                                        it,
+                                        arrayOf(
+                                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                        ),
+                                        REQUEST_LOCATION_PERMISSIONS
                                 )
                             }
                         } else {
-                            currentActivity?.let {
-                                ActivityCompat.requestPermissions(
+                            doIfPermissionsGranted();
+                        }
+                    }
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        currentActivity?.let {
+                            ActivityCompat.requestPermissions(
                                     it,
                                     arrayOf(
-                                        Manifest.permission.ACCESS_FINE_LOCATION,
-                                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                                        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                                        Manifest.permission.BLUETOOTH
+                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
                                     ),
                                     REQUEST_LOCATION_PERMISSIONS
-                                )
-                            }
+                            )
                         }
                     } else {
                         currentActivity?.let {
                             ActivityCompat.requestPermissions(
-                                it,
-                                arrayOf(
-                                    Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION
-                                ),
-                                REQUEST_LOCATION_PERMISSIONS
+                                    it,
+                                    arrayOf(
+                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.ACCESS_COARSE_LOCATION
+                                    ),
+                                    REQUEST_LOCATION_PERMISSIONS
                             )
                         }
                     }
-                } else {
-                    doIfPermissionsGranted()
                 }
-            } else {
-                doIfPermissionsGranted()
             }
         }
 
@@ -301,23 +299,36 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
         private fun requestBackgroundPermission() {
             if (!isPermissionDialogShown()) {
                 currentActivity?.let {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        //if (it.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                        val builder: AlertDialog.Builder =
+                    //if (it.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                    val builder: AlertDialog.Builder =
                             AlertDialog.Builder(it)
-                        builder.setTitle(defaultPermissionDialogTitle)
-                        builder.setMessage(defaultPermissionDialogMessage)
-                        builder.setPositiveButton("Ok", null)
-                        builder.setOnDismissListener {
-                            setPermissionDialogShown()
-                            requestLocationPermissions()
-                            channel?.invokeMethod("isPermissionDialogShown", "true")
-                        }
-                        builder.show()
-                        //}
+                    builder.setTitle(defaultPermissionDialogTitle)
+                    builder.setMessage(defaultPermissionDialogMessage)
+                    builder.setPositiveButton("Ok", null)
+                    builder.setOnDismissListener {
+                        setPermissionDialogShown()
+                        requestLocationPermissions()
+                        channel?.invokeMethod("isPermissionDialogShown", "true")
                     }
+                    builder.show()
+                    //}
                 }
             }
+        }
+
+        /**
+         * Checks is the specified permission is granted
+         *
+         * @param permission A manifest permission
+         */
+        private fun isGranted(permission: String): Boolean {
+            currentActivity?.let {
+                return ContextCompat.checkSelfPermission(
+                        it,
+                        permission
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+            return false;
         }
 
         @JvmStatic
@@ -338,11 +349,8 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
         @JvmStatic
         private fun areBackgroundScanPermissionsGranted(): Boolean {
             currentActivity?.let {
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    ContextCompat.checkSelfPermission(
-                        it,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    return isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
                 } else {
                     return true
                 }
