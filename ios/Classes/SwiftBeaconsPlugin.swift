@@ -38,7 +38,7 @@ public class SwiftBeaconsPlugin: NSObject, FlutterPlugin {
             {
                 // addRegion(uuid: uuid, major: major, minor: minor, name: name)
                 addRegion(uuid: uuid, name: name)
-                result("Region Added.")
+                result("Region Added with UUID: \(uuid)")
             } else {
                 result("iOS could not extract flutter arguments in method: (addRegion)")
             }
@@ -52,7 +52,7 @@ public class SwiftBeaconsPlugin: NSObject, FlutterPlugin {
             {
                 // addRegion(uuid: uuid, major: major, minor: minor, name: name)
                 addRegion(uuid: uuid, name: name)
-                result("Region Added.")
+                result("Region Added with UUID: \(uuid)")
             } else {
                 result("iOS could not extract flutter arguments in method: (addRegion)")
             }
@@ -63,25 +63,21 @@ public class SwiftBeaconsPlugin: NSObject, FlutterPlugin {
             locationManager.delegate = self
             startScanning()
             result("Started scanning Beacons.")
-        }else if call.method == "stopMonitoring"{
+        } else if call.method == "stopMonitoring"{
             stopScanning()
             result("Stopped scanning Beacons.")
-        }else if call.method == "runInBackground"{
+        } else if call.method == "runInBackground"{
             runInBackground = true
             result("App will run in background? \(runInBackground)")
-        }else {
+        } else {
             result("Flutter method not implemented on iOS")
         }
     }
 
-    // func addRegion(uuid:String?, major:Int, minor:Int, name:String){
-    func addRegion(uuid:String?, name:String){
-        guard let uuid = UUID(uuidString: uuid ?? "") else { return; }
-        // let major = major
-        // let minor = minor
+    func addRegion(uuid uuidString: String?, name: String) {
+        guard let uuid = UUID(uuidString: uuidString ?? "") else { return; }
         let name = name
 
-        // let newItem = Item(name: name, uuid: uuid, majorValue: major, minorValue: minor)
         let newItem = Item(name: name, uuid: uuid)
         listOfRegions.append(newItem)
     }
@@ -92,14 +88,31 @@ public class SwiftBeaconsPlugin: NSObject, FlutterPlugin {
 
     func startMonitoringItem(_ item: Item) {
         let beaconRegion = item.asBeaconRegion()
-        locationManager.startMonitoring(for: beaconRegion)
-        locationManager.startRangingBeacons(in: beaconRegion)
+        if (CLLocationManager.isMonitoringAvailable(for: CLRegion.self) && CLLocationManager.isRangingAvailable()) {
+            locationManager.startMonitoring(for: beaconRegion)
+            if #available(iOS 13.0, *) {
+                locationManager.startRangingBeacons(satisfying: CLBeaconIdentityConstraint(uuid: item.uuid))
+            } else {
+                // Fallback on earlier versions
+                locationManager.startRangingBeacons(in: beaconRegion)
+            }
+        } else {
+            print("[ERROR] isMonitoringAvailable: \(CLLocationManager.isMonitoringAvailable(for: CLRegion.self))")
+            print("[ERROR] isRangingAvailable: \(CLLocationManager.isRangingAvailable())")
+        }
+
     }
 
     func stopMonitoringItem(_ item: Item) {
         let beaconRegion = item.asBeaconRegion()
         locationManager.stopMonitoring(for: beaconRegion)
-        locationManager.stopRangingBeacons(in: beaconRegion)
+
+        if #available(iOS 13.0, *) {
+            locationManager.stopRangingBeacons(satisfying: CLBeaconIdentityConstraint(uuid: item.uuid))
+        } else {
+            // Fallback on earlier versions
+            locationManager.stopRangingBeacons(in: beaconRegion)
+        }
     }
 
     func startScanning() {
