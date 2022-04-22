@@ -80,7 +80,7 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
     }
 
     override fun stopMonitoringBeacons() {
-        Timber.i(TAG, "stopMonitoringBeacons")
+        Timber.i("[${TAG}]: stopMonitoringBeacons")
 
         beaconManager?.unbind(this)
         eventSink = null
@@ -91,15 +91,15 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
     }
 
     override fun onBeaconServiceConnect() {
-        Timber.i(TAG, "onBeaconServiceConnect")
+        Timber.i("[${TAG}]: onBeaconServiceConnect")
 
         beaconManager?.removeAllMonitorNotifiers()
 
         beaconManager?.addMonitorNotifier(object : MonitorNotifier {
             override fun didEnterRegion(region: Region) {
                 try {
-                    Timber.d(TAG, "didEnterRegion")
-                    beaconManager?.startRangingBeaconsInRegion(region)
+                    Timber.d("[${TAG}]: didEnterRegion")
+                    beaconManager?.startRangingBeacons(region)
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
@@ -108,8 +108,8 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
 
             override fun didExitRegion(region: Region) {
                 try {
-                    Timber.d(TAG, "didExitRegion")
-                    beaconManager?.stopRangingBeaconsInRegion(region)
+                    Timber.d("[${TAG}]: didExitRegion")
+                    beaconManager?.stopRangingBeacons(region)
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
@@ -182,19 +182,19 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
 
     private fun startMonitoringBeacons(region: Region) {
         try {
-            Timber.i(TAG, "startMonitoringBeacons: ${region.uniqueId}")
-            beaconManager?.startMonitoringBeaconsInRegion(region)
-            beaconManager?.startRangingBeaconsInRegion(region)
+            Timber.i("[${TAG}]: startMonitoringBeacons: ${region.uniqueId}")
+            beaconManager?.startMonitoring(region)
+            beaconManager?.startRangingBeacons(region)
         } catch (e: RemoteException) {
             e.printStackTrace()
-            Timber.e(TAG, e.message.toString())
+            Timber.e("[${TAG}]: ${e.message.toString()}")
         }
     }
 
     private fun setUpBeaconManager(context: Context) {
         if (BeaconsPlugin.permissionsGranted(context)) {
 
-            Timber.i(TAG, "setUpBeaconManager")
+            Timber.i("[${TAG}]: setUpBeaconManager")
             beaconManager = BeaconManager.getInstanceForApplication(context)
 
             beaconManager?.beaconParsers?.add(BeaconParser().setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"))
@@ -214,7 +214,7 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
 
             beaconManager?.bind(this)
         } else {
-            Timber.e(TAG, "Location permissions are needed.")
+            Timber.e("[${TAG}]: Location permissions are needed.")
         }
     }
 
@@ -235,14 +235,14 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
         listOfRegions.add(region)
 
         result.success("Region Added: ${region.uniqueId}, UUID: ${region.id1}")
-        Timber.i(TAG, "Region Added: ${region.uniqueId}, UUID: ${region.id1}")
+        Timber.i("[${TAG}]: Region Added: ${region.uniqueId}, UUID: ${region.id1}")
     }
 
     override fun clearRegions(call: MethodCall, result: MethodChannel.Result) {
         listOfRegions = arrayListOf<Region>()
 
         result.success("Regions Cleared")
-        Timber.i(TAG, "Regions Cleared")
+        Timber.i("[${TAG}]: Regions Cleared")
     }
 
     override fun startScanning() {
@@ -251,12 +251,12 @@ open class BeaconHelper(var context: Context) : BeaconConsumer, BeaconsPlugin.Co
         setUpBeaconManager(context)
 
         if (listOfRegions.isNotEmpty()) {
-            Timber.i(TAG, "Started Monitoring ${listOfRegions.size} regions.")
+            Timber.i("[${TAG}]: Started Monitoring ${listOfRegions.size} regions.")
             listOfRegions.forEach {
                 startMonitoringBeacons(it)
             }
         } else {
-            Timber.i(TAG, "startScanning: No regions added..")
+            Timber.i("[${TAG}]: startScanning: No regions added..")
         }
     }
 }

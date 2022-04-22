@@ -39,7 +39,6 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
     }
 
     companion object {
-        private val TAG = "BeaconsPlugin"
         private var REQUEST_LOCATION_PERMISSIONS = 1890
         private var PERMISSION_REQUEST_BACKGROUND_LOCATION = 1891
         private var channel: MethodChannel? = null
@@ -93,37 +92,39 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
             channel = MethodChannel(messenger, "beacons_plugin")
             notifyIfPermissionsGranted(context)
             channel?.setMethodCallHandler { call, result ->
-                when {
-                    call.method == "startMonitoring" -> {
+                when (call.method) {
+                    "startMonitoring" -> {
                         stopService = false
                         callBack?.startScanning()
                         result.success("Started scanning Beacons.")
                     }
-                    call.method == "stopMonitoring" -> {
 
+                    "stopMonitoring" -> {
                         if (runInBackground) {
                             stopService = true
-                            context.let {
-                                stopBackgroundService(it)
-                            }
+                            stopBackgroundService(context)
                         }
 
                         callBack?.stopMonitoringBeacons()
                         result.success("Stopped scanning Beacons.")
                     }
-                    call.method == "addRegion" -> {
+
+                    "addRegion" -> {
                         callBack?.addRegion(call, result)
                     }
-                    call.method == "clearRegions" -> {
+
+                    "clearRegions" -> {
                         callBack?.clearRegions(call, result)
                     }
-                    call.method == "runInBackground" -> {
+
+                    "runInBackground" -> {
                         call.argument<Boolean>("background")?.let {
                             runInBackground = it
                         }
                         result.success("App will run in background? $runInBackground")
                     }
-                    call.method == "clearDisclosureDialogShowFlag" -> {
+
+                    "clearDisclosureDialogShowFlag" -> {
                         call.argument<Boolean>("clearFlag")?.let {
                             if (it) {
                                 clearPermissionDialogShownFlag()
@@ -134,7 +135,8 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                             }
                         }
                     }
-                    call.method == "setDisclosureDialogMessage" -> {
+
+                    "setDisclosureDialogMessage" -> {
                         call.argument<String>("title")?.let {
                             defaultPermissionDialogTitle = it
                         }
@@ -144,13 +146,15 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                         requestPermission()
                         result.success("Disclosure message Set: $defaultPermissionDialogMessage")
                     }
-                    call.method == "addBeaconLayoutForAndroid" -> {
+
+                    "addBeaconLayoutForAndroid" -> {
                         call.argument<String>("layout")?.let {
                             callBack?.addBeaconLayout(it)
                             result.success("Beacon layout added: $it")
                         }
                     }
-                    call.method == "setForegroundScanPeriodForAndroid" -> {
+
+                    "setForegroundScanPeriodForAndroid" -> {
                         var foregroundScanPeriod = 1100L
                         var foregroundBetweenScanPeriod = 0L
                         call.argument<Int>("foregroundScanPeriod")?.let {
@@ -164,12 +168,13 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                             }
                         }
                         callBack?.setForegroundScanPeriod(
-                            foregroundScanPeriod = foregroundScanPeriod,
-                            foregroundBetweenScanPeriod = foregroundBetweenScanPeriod
+                                foregroundScanPeriod = foregroundScanPeriod,
+                                foregroundBetweenScanPeriod = foregroundBetweenScanPeriod
                         )
                         result.success("setForegroundScanPeriod updated.")
                     }
-                    call.method == "setBackgroundScanPeriodForAndroid" -> {
+
+                    "setBackgroundScanPeriodForAndroid" -> {
                         var backgroundScanPeriod = 1100L
                         var backgroundBetweenScanPeriod = 0L
                         call.argument<Int>("backgroundScanPeriod")?.let {
@@ -183,8 +188,8 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                             }
                         }
                         callBack?.setBackgroundScanPeriod(
-                            backgroundScanPeriod = backgroundScanPeriod,
-                            backgroundBetweenScanPeriod = backgroundBetweenScanPeriod
+                                backgroundScanPeriod = backgroundScanPeriod,
+                                backgroundBetweenScanPeriod = backgroundBetweenScanPeriod
                         )
                         result.success("setBackgroundScanPeriod updated.")
                     }
@@ -262,8 +267,6 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                                         REQUEST_LOCATION_PERMISSIONS
                                 )
                             }
-                        } else {
-                            doIfPermissionsGranted();
                         }
                     }
                 } else {
@@ -293,6 +296,7 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                     }
                 }
             }
+            doIfPermissionsGranted();
         }
 
         @JvmStatic
@@ -313,6 +317,8 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                     builder.show()
                     //}
                 }
+            } else {
+                requestLocationPermissions()
             }
         }
 
@@ -328,29 +334,20 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
                         permission
                 ) == PackageManager.PERMISSION_GRANTED
             }
-            return false;
+            return false
         }
 
         @JvmStatic
         private fun arePermissionsGranted(): Boolean {
-            currentActivity?.let {
-                return ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED &&
-                        ContextCompat.checkSelfPermission(
-                            it,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-            }
-            return false
+            return isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
+                    && isGranted(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
         @JvmStatic
         private fun areBackgroundScanPermissionsGranted(): Boolean {
             currentActivity?.let {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    return isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+                    return isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 } else {
                     return true
                 }
@@ -408,7 +405,7 @@ class BeaconsPlugin : FlutterPlugin, ActivityAware,
         channel?.setMethodCallHandler(null)
         event_channel?.setStreamHandler(null)
 
-        if (!BeaconsPlugin.runInBackground)
+        if (!runInBackground)
             beaconHelper?.stopMonitoringBeacons()
 
         context?.let {

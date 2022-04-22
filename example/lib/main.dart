@@ -75,6 +75,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       //await BeaconsPlugin.clearDisclosureDialogShowFlag(false);
     }
 
+    BeaconsPlugin.listenToBeacons(beaconEventsController);
+
     if (Platform.isAndroid) {
       BeaconsPlugin.channel.setMethodCallHandler((call) async {
         print("Method: ${call.method}");
@@ -97,24 +99,23 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       });
     }
 
-    BeaconsPlugin.listenToBeacons(beaconEventsController);
     await BeaconsPlugin.addRegion(
         "BeaconType0", "fda50693-a4e2-4fb1-afcf-c6eb07647825");
-    await BeaconsPlugin.addRegion(
-        "BeaconType1", "909c3cf9-fc5c-4841-b695-380958a51a5a");
-    await BeaconsPlugin.addRegion(
-        "BeaconType2", "6a84c716-0f2a-1ce9-f210-6a63bd873dd9");
-
-    BeaconsPlugin.addBeaconLayoutForAndroid(
-        "m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25");
-    BeaconsPlugin.addBeaconLayoutForAndroid(
-        "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
-
-    BeaconsPlugin.setForegroundScanPeriodForAndroid(
-        foregroundScanPeriod: 2200, foregroundBetweenScanPeriod: 10);
-
-    BeaconsPlugin.setBackgroundScanPeriodForAndroid(
-        backgroundScanPeriod: 2200, backgroundBetweenScanPeriod: 10);
+    // await BeaconsPlugin.addRegion(
+    //     "BeaconType1", "909c3cf9-fc5c-4841-b695-380958a51a5a");
+    // await BeaconsPlugin.addRegion(
+    //     "BeaconType2", "6a84c716-0f2a-1ce9-f210-6a63bd873dd9");
+    //
+    // BeaconsPlugin.addBeaconLayoutForAndroid(
+    //     "m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25");
+    // BeaconsPlugin.addBeaconLayoutForAndroid(
+    //     "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24");
+    //
+    // BeaconsPlugin.setForegroundScanPeriodForAndroid(
+    //     foregroundScanPeriod: 2200, foregroundBetweenScanPeriod: 10);
+    //
+    // BeaconsPlugin.setBackgroundScanPeriodForAndroid(
+    //     backgroundScanPeriod: 2200, backgroundBetweenScanPeriod: 10);
 
     beaconEventsController.stream.listen(
         (data) {
